@@ -7,6 +7,11 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
+
+# Set API URL for production build
+ARG VITE_API_URL=https://api.bilimbot.uz/api
+ENV VITE_API_URL=$VITE_API_URL
+
 RUN npm run build
 
 # Production stage
