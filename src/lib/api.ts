@@ -82,6 +82,7 @@ export interface LessonDetail {
   type: string;
   description?: string;
   text?: string;
+  videoUrl?: string;
   resources?: Array<{ type: string; label: string; url: string }>;
   questions?: QuizQuestion[];
   canPlayInWebapp: boolean;

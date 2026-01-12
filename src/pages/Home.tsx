@@ -71,9 +71,10 @@ export function Home() {
                     }}
                   />
                 </div>
-                <p className="progress-text">
-                  {course.completedLessons} / {course.totalLessons} lessons completed
-                </p>
+                <div className="progress-text">
+                  <span>{course.completedLessons} / {course.totalLessons} lessons</span>
+                  <span>{Math.round((course.completedLessons / course.totalLessons) * 100)}%</span>
+                </div>
               </div>
             ))}
           </div>
@@ -91,7 +92,13 @@ export function Home() {
                 {course.description && (
                   <p className="course-description">{course.description}</p>
                 )}
-                <p className="lessons-count">{course.totalLessons} lessons</p>
+                <div className="lessons-count">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                  </svg>
+                  {course.totalLessons} lessons
+                </div>
                 {course.price && course.price > 0 ? (
                   <p className="price">💰 {course.price.toLocaleString()} UZS</p>
                 ) : (

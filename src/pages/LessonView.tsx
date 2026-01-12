@@ -108,9 +108,7 @@ export function LessonView() {
     const tg = getTelegramWebApp();
     if (tg) {
       sendPlayVideoAction(parseInt(lessonId));
-      tg.showAlert('📺 Video will be sent to your chat. Please check Telegram.');
-      // Optionally close the WebApp
-      // tg.close();
+      tg.close();
     }
   };
 
@@ -303,16 +301,39 @@ export function LessonView() {
         <div className="video-content">
           {lesson.description && <p className="video-description">{lesson.description}</p>}
           
-          <div className="video-placeholder">
-            <span className="video-icon">🎬</span>
-            <p>Videos are played in Telegram chat</p>
-          </div>
+          {lesson.videoUrl ? (
+            <div className="video-player-wrapper">
+              <video 
+                controls 
+                className="video-player" 
+                src={lesson.videoUrl} 
+                style={{ width: '100%', borderRadius: '8px', marginBottom: '16px' }}
+              />
+              
+              {lesson.status !== 'completed' && (
+                <button
+                  className="complete-button"
+                  onClick={handleComplete}
+                  disabled={completing}
+                >
+                  {completing ? 'Completing...' : '✅ Mark as Completed'}
+                </button>
+              )}
+            </div>
+          ) : (
+            <>
+              <div className="video-placeholder">
+                <span className="video-icon">🎬</span>
+                <p>Videos are played in Telegram chat</p>
+              </div>
 
-          <button className="watch-button" onClick={handleWatchVideo}>
-            ▶️ Watch in Chat
-          </button>
+              <button className="watch-button" onClick={handleWatchVideo}>
+                ▶️ Watch in Chat
+              </button>
+            </>
+          )}
 
-          {lesson.status === 'completed' && (
+          {lesson.status === 'completed' && !lesson.videoUrl && (
             <p className="video-note">
               This lesson has been marked as completed.
             </p>
