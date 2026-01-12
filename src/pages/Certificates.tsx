@@ -62,7 +62,7 @@ export function Certificates() {
     }
   };
 
-  const handleDownload = (cert: Certificate) => {
+  const handleDownload = (_cert: Certificate) => {
     const tg = getTelegramWebApp();
     tg?.showAlert('Certificate download will be available soon. Contact support to get your certificate.');
   };
