@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { webappApi } from '../lib/api';
 import type { CourseOutline, LessonOutlineItem } from '../lib/api';
 import { getTelegramWebApp } from '../lib/telegram';
+import { Lock, CheckCircle, Clock, Circle, FileText, Video, Paperclip, HelpCircle, Loader2, Play, ChevronDown, ChevronRight } from 'lucide-react';
 import './Syllabus.css';
 
 export function Syllabus() {
@@ -72,7 +73,7 @@ export function Syllabus() {
     
     if (!lesson.canOpen) {
       if (lesson.status === 'locked') {
-        tg?.showAlert('🔒 This lesson is locked. Complete previous lessons or wait for the scheduled unlock.');
+        tg?.showAlert('This lesson is locked. Complete previous lessons or wait for the scheduled unlock.');
       } else {
         tg?.showAlert('You cannot access this lesson yet.');
       }
@@ -83,19 +84,21 @@ export function Syllabus() {
   };
 
   const getStatusIcon = (lesson: LessonOutlineItem) => {
-    if (lesson.status === 'locked') return '🔒';
-    if (lesson.status === 'completed') return '✅';
-    if (lesson.status === 'in_progress') return '⏳';
-    return '○';
+    const size = 18;
+    if (lesson.status === 'locked') return <Lock size={size} className="status-icon locked" />;
+    if (lesson.status === 'completed') return <CheckCircle size={size} className="status-icon completed" />;
+    if (lesson.status === 'in_progress') return <Clock size={size} className="status-icon in-progress" />;
+    return <Circle size={size} className="status-icon not-started" />;
   };
 
   const getTypeIcon = (type: string) => {
+    const size = 16;
     switch (type) {
-      case 'text': return '📄';
-      case 'video': return '🎬';
-      case 'file': return '📎';
-      case 'quiz': return '❓';
-      default: return '📄';
+      case 'text': return <FileText size={size} className="type-icon" />;
+      case 'video': return <Video size={size} className="type-icon" />;
+      case 'file': return <Paperclip size={size} className="type-icon" />;
+      case 'quiz': return <HelpCircle size={size} className="type-icon" />;
+      default: return <FileText size={size} className="type-icon" />;
     }
   };
 
@@ -112,7 +115,7 @@ export function Syllabus() {
   if (loading) {
     return (
       <div className="loading-container">
-        <div className="spinner"></div>
+        <Loader2 className="spinner-icon" size={48} />
         <p>Loading syllabus...</p>
       </div>
     );
@@ -155,37 +158,39 @@ export function Syllabus() {
           <div className="current-status">
             {currentLessonTitle ? (
               <>
-                <span className="status-label">📍 Currently at:</span>
+                <span className="status-label">Currently at:</span>
                 <span className="current-lesson-title">{currentLessonTitle}</span>
               </>
             ) : (
-              <span className="status-label">🎉 Course completed!</span>
+              <span className="status-label">Course completed!</span>
             )}
           </div>
         )}
 
         {outline.enrollmentStatus === 'blocked' && (
           <div className="enrollment-blocked">
-            🚫 Your enrollment is blocked. Please contact support.
+            Your enrollment is blocked. Please contact support.
           </div>
         )}
 
         {outline.enrollmentStatus === 'none' && (
           <div className="not-enrolled">
-            📝 You are not enrolled in this course.
+            You are not enrolled in this course.
           </div>
         )}
 
         {/* Continue Button */}
         {outline.enrollmentStatus === 'active' && outline.currentLessonId && (
           <button className="continue-button" onClick={handleContinue}>
-            ▶️ Continue Learning
+            <Play size={18} />
+            Continue Learning
           </button>
         )}
 
         {outline.enrollmentStatus === 'active' && !outline.currentLessonId && (
           <button className="review-button" onClick={() => {}}>
-            📖 Review Course
+            <CheckCircle size={18} />
+            Review Course
           </button>
         )}
       </div>
@@ -200,7 +205,11 @@ export function Syllabus() {
             >
               <div className="module-info">
                 <span className="expand-icon">
-                  {expandedModules.has(module.id) ? '▼' : '▶'}
+                  {expandedModules.has(module.id) ? (
+                    <ChevronDown size={20} />
+                  ) : (
+                    <ChevronRight size={20} />
+                  )}
                 </span>
                 <h2 className="module-title">{module.title}</h2>
               </div>

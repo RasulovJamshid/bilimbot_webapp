@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { webappApi } from '../lib/api';
 import { useState } from 'react';
+import { BookOpen, GraduationCap, Loader2, AlertCircle, User } from 'lucide-react';
 import './Home.css';
 
 export function Home() {
@@ -12,7 +13,7 @@ export function Home() {
   if (loading) {
     return (
       <div className="loading-container">
-        <div className="spinner"></div>
+        <Loader2 className="spinner-icon" size={48} />
         <p>Loading...</p>
       </div>
     );
@@ -21,6 +22,7 @@ export function Home() {
   if (error) {
     return (
       <div className="error-container">
+        <AlertCircle size={48} className="error-icon" />
         <p className="error-text">{error}</p>
       </div>
     );
@@ -42,13 +44,19 @@ export function Home() {
     <div className="home-page">
       {student && (
         <div className="welcome-section">
-          <h1>👋 Hello, {student.firstName || 'Student'}!</h1>
+          <div className="welcome-header">
+            <User size={32} className="user-icon" />
+            <h1>Hello, {student.firstName || 'Student'}!</h1>
+          </div>
         </div>
       )}
 
       {/* My Courses */}
       <section className="courses-section">
-        <h2>📚 My Courses</h2>
+        <div className="section-header">
+          <BookOpen size={24} />
+          <h2>My Courses</h2>
+        </div>
         {myCourses.length === 0 ? (
           <p className="empty-text">You haven't enrolled in any courses yet.</p>
         ) : (
@@ -84,7 +92,10 @@ export function Home() {
       {/* Available Courses */}
       {availableCourses.length > 0 && (
         <section className="courses-section">
-          <h2>🎓 Available Courses</h2>
+          <div className="section-header">
+            <GraduationCap size={24} />
+            <h2>Available Courses</h2>
+          </div>
           <div className="courses-list">
             {availableCourses.map((course) => (
               <div key={course.id} className="course-card available">
@@ -93,14 +104,11 @@ export function Home() {
                   <p className="course-description">{course.description}</p>
                 )}
                 <div className="lessons-count">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                  </svg>
+                  <BookOpen size={16} />
                   {course.totalLessons} lessons
                 </div>
                 {course.price && course.price > 0 ? (
-                  <p className="price">💰 {course.price.toLocaleString()} UZS</p>
+                  <p className="price">{course.price.toLocaleString()} UZS</p>
                 ) : (
                   <button
                     className="enroll-button"

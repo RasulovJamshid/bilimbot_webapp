@@ -99,6 +99,10 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .continue-button {
@@ -147,6 +151,13 @@
   align-items: center;
   gap: 10px;
   flex: 1;
+}
+
+.expand-icon {
+  display: flex;
+  align-items: center;
+  color: var(--tg-theme-hint-color, #999);
+  flex-shrink: 0;
 }
 
 .expand-icon {
@@ -227,15 +238,39 @@
 }
 
 .lesson-status-icon {
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 20px;
-  text-align: center;
+  flex-shrink: 0;
+}
+
+.status-icon.locked {
+  color: #999;
+}
+
+.status-icon.completed {
+  color: #27ae60;
+}
+
+.status-icon.in-progress {
+  color: var(--tg-theme-button-color, #0088cc);
+}
+
+.status-icon.not-started {
+  color: #ccc;
 }
 
 .lesson-type-icon {
-  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 20px;
-  text-align: center;
+  flex-shrink: 0;
+}
+
+.type-icon {
+  color: var(--tg-theme-hint-color, #666);
 }
 
 .lesson-info {

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { webappApi } from '../lib/api';
 import type { LessonDetail, QuizResult, LessonOutlineItem } from '../lib/api';
 import { getTelegramWebApp } from '../lib/telegram';
+import { Loader2, CheckCircle, XCircle, BarChart3, Paperclip, FileText, Link as LinkIcon, Play, Video } from 'lucide-react';
 import './LessonView.css';
 
 export function LessonView() {
@@ -105,19 +106,27 @@ export function LessonView() {
   const handleWatchVideo = async () => {
     if (!lessonId) return;
     
+    const tg = getTelegramWebApp();
+    
     try {
+      // Show loading state
+      tg?.showPopup({
+        title: 'Loading',
+        message: 'Sending video to chat...',
+        buttons: []
+      });
+      
       // Call API to request video be sent to chat
       await webappApi.requestVideo(parseInt(lessonId));
       
       // Close WebApp to return to chat where video will appear
-      const tg = getTelegramWebApp();
       if (tg) {
         tg.close();
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to request video:', err);
-      const tg = getTelegramWebApp();
-      tg?.showAlert('Failed to send video. Please try again.');
+      const errorMsg = err?.response?.data?.message || err?.message || 'Failed to send video. Please try again.';
+      tg?.showAlert(`Error: ${errorMsg}`);
     }
   };
 
@@ -181,8 +190,8 @@ export function LessonView() {
   if (loading) {
     return (
       <div className="loading-container">
-        <div className="spinner"></div>
-        <p>Loading lesson...</p>
+        <Loader2 className="spinner-icon" size={48} />
+        <p>Loading...</p>
       </div>
     );
   }
@@ -200,7 +209,10 @@ export function LessonView() {
     return (
       <div className="lesson-view-page">
         <div className="quiz-result">
-          <h1>📊 Quiz Results</h1>
+          <div className="quiz-result-header">
+            <BarChart3 size={32} />
+            <h1>Quiz Results</h1>
+          </div>
           <div className="score-display">
             <span className="score">{quizResult.score}</span>
             <span className="separator">/</span>
@@ -215,7 +227,11 @@ export function LessonView() {
                 className={`result-item ${result.correct ? 'correct' : 'incorrect'}`}
               >
                 <span className="question-num">Q{index + 1}</span>
-                <span className="result-icon">{result.correct ? '✅' : '❌'}</span>
+                {result.correct ? (
+                  <CheckCircle size={20} className="result-icon correct" />
+                ) : (
+                  <XCircle size={20} className="result-icon incorrect" />
+                )}
                 <span className="points">+{result.points} pts</span>
               </div>
             ))}
@@ -234,7 +250,10 @@ export function LessonView() {
       <h1 className="lesson-title">{lesson.title}</h1>
       
       {lesson.status === 'completed' && (
-        <div className="completed-badge">✅ Completed</div>
+        <div className="completed-badge">
+          <CheckCircle size={18} />
+          <span>Completed</span>
+        </div>
       )}
 
       {/* Text Lesson */}
@@ -244,7 +263,10 @@ export function LessonView() {
           
           {lesson.resources && lesson.resources.length > 0 && (
             <div className="resources-section">
-              <h3>📎 Resources</h3>
+              <div className="resources-header">
+                <Paperclip size={20} />
+                <h3>Resources</h3>
+              </div>
               {lesson.resources.map((resource, index) => (
                 <a
                   key={index}
@@ -253,7 +275,12 @@ export function LessonView() {
                   rel="noopener noreferrer"
                   className="resource-link"
                 >
-                  {resource.type === 'file' ? '📄' : '🔗'} {resource.label}
+                  {resource.type === 'file' ? (
+                    <FileText size={16} />
+                  ) : (
+                    <LinkIcon size={16} />
+                  )}
+                  {resource.label}
                 </a>
               ))}
             </div>
@@ -265,7 +292,17 @@ export function LessonView() {
               onClick={handleComplete}
               disabled={completing}
             >
-              {completing ? 'Completing...' : '✅ Mark as Completed'}
+              {completing ? (
+                <>
+                  <Loader2 size={18} className="button-spinner" />
+                  Completing...
+                </>
+              ) : (
+                <>
+                  <CheckCircle size={18} />
+                  Mark as Completed
+                </>
+              )}
             </button>
           )}
         </div>
@@ -278,7 +315,10 @@ export function LessonView() {
           
           {lesson.resources && lesson.resources.length > 0 && (
             <div className="resources-section">
-              <h3>📎 Files & Resources</h3>
+              <div className="resources-header">
+                <Paperclip size={20} />
+                <h3>Files & Resources</h3>
+              </div>
               {lesson.resources.map((resource, index) => (
                 <a
                   key={index}
@@ -287,7 +327,12 @@ export function LessonView() {
                   rel="noopener noreferrer"
                   className="resource-link"
                 >
-                  {resource.type === 'file' ? '📄' : '🔗'} {resource.label}
+                  {resource.type === 'file' ? (
+                    <FileText size={16} />
+                  ) : (
+                    <LinkIcon size={16} />
+                  )}
+                  {resource.label}
                 </a>
               ))}
             </div>
@@ -299,7 +344,17 @@ export function LessonView() {
               onClick={handleComplete}
               disabled={completing}
             >
-              {completing ? 'Completing...' : '✅ Mark as Completed'}
+              {completing ? (
+                <>
+                  <Loader2 size={18} className="button-spinner" />
+                  Completing...
+                </>
+              ) : (
+                <>
+                  <CheckCircle size={18} />
+                  Mark as Completed
+                </>
+              )}
             </button>
           )}
         </div>
@@ -325,19 +380,30 @@ export function LessonView() {
                   onClick={handleComplete}
                   disabled={completing}
                 >
-                  {completing ? 'Completing...' : '✅ Mark as Completed'}
+                  {completing ? (
+                    <>
+                      <Loader2 size={18} className="button-spinner" />
+                      Completing...
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle size={18} />
+                      Mark as Completed
+                    </>
+                  )}
                 </button>
               )}
             </div>
           ) : (
             <>
               <div className="video-placeholder">
-                <span className="video-icon">🎬</span>
+                <Video size={48} className="video-icon" />
                 <p>Videos are played in Telegram chat</p>
               </div>
 
               <button className="watch-button" onClick={handleWatchVideo}>
-                ▶️ Watch in Chat
+                <Play size={18} />
+                Watch in Chat
               </button>
             </>
           )}
