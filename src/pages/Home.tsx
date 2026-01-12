@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { webappApi } from '../lib/api';
 import { useState } from 'react';
-import { BookOpen, GraduationCap, Loader2, AlertCircle, User, BarChart3, Settings as SettingsIcon, HelpCircle } from 'lucide-react';
+import { BookOpen, GraduationCap, Loader2, AlertCircle, User, BarChart3, Settings as SettingsIcon, HelpCircle, Award } from 'lucide-react';
 import './Home.css';
 
 export function Home() {
@@ -56,6 +56,10 @@ export function Home() {
         <button className="nav-button" onClick={() => navigate('/progress')}>
           <BarChart3 size={20} />
           <span>Progress</span>
+        </button>
+        <button className="nav-button" onClick={() => navigate('/certificates')}>
+          <Award size={20} />
+          <span>Certificates</span>
         </button>
         <button className="nav-button" onClick={() => navigate('/settings')}>
           <SettingsIcon size={20} />

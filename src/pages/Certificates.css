@@ -1,0 +1,299 @@
+.certificates-page {
+  padding: 16px;
+  padding-bottom: 32px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.certificates-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 24px 0;
+  color: var(--tg-theme-text-color, #000);
+}
+
+/* Stats Badge */
+.certificates-stats {
+  margin-bottom: 24px;
+}
+
+.stat-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: white;
+}
+
+.stat-badge svg {
+  flex-shrink: 0;
+}
+
+.stat-number {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Certificates List */
+.certificates-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.certificate-card {
+  background: var(--tg-theme-secondary-bg-color, #f5f5f5);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid var(--tg-theme-button-color, #0088cc);
+}
+
+.certificate-header {
+  background: linear-gradient(135deg, var(--tg-theme-button-color, #0088cc) 0%, #00a0e9 100%);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: white;
+}
+
+.certificate-icon {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.certificate-info {
+  flex: 1;
+}
+
+.certificate-course {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: white;
+}
+
+.certificate-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.certificate-meta svg {
+  flex-shrink: 0;
+}
+
+/* Certificate Body */
+.certificate-body {
+  padding: 20px;
+}
+
+.certificate-code-section {
+  margin-bottom: 16px;
+}
+
+.code-label {
+  display: block;
+  font-size: 12px;
+  color: var(--tg-theme-hint-color, #999);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.certificate-code {
+  display: block;
+  background: var(--tg-theme-bg-color, #fff);
+  padding: 12px;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: var(--tg-theme-text-color, #000);
+  word-break: break-all;
+  border: 1px solid var(--tg-theme-button-color, #0088cc);
+}
+
+.certificate-student {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.student-label {
+  font-size: 12px;
+  color: var(--tg-theme-hint-color, #999);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.student-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--tg-theme-text-color, #000);
+}
+
+/* Certificate Actions */
+.certificate-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--tg-theme-bg-color, rgba(0, 0, 0, 0.1));
+}
+
+.action-button {
+  padding: 14px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.action-button.secondary {
+  background: var(--tg-theme-secondary-bg-color, #f5f5f5);
+  color: var(--tg-theme-text-color, #000);
+}
+
+.action-button.primary {
+  background: var(--tg-theme-button-color, #0088cc);
+  color: var(--tg-theme-button-text-color, #fff);
+}
+
+.action-button:active {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+/* Footer */
+.certificates-footer {
+  margin-top: 24px;
+  padding: 16px;
+  background: var(--tg-theme-secondary-bg-color, #f5f5f5);
+  border-radius: 12px;
+}
+
+.footer-note {
+  font-size: 13px;
+  color: var(--tg-theme-hint-color, #666);
+  margin: 0;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Empty State */
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 32px;
+}
+
+.empty-icon {
+  color: var(--tg-theme-hint-color, #ccc);
+  margin-bottom: 16px;
+}
+
+.empty-container h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: var(--tg-theme-text-color, #000);
+}
+
+.empty-container p {
+  font-size: 14px;
+  color: var(--tg-theme-hint-color, #999);
+  margin: 0 0 24px 0;
+}
+
+.browse-button {
+  padding: 12px 24px;
+  background: var(--tg-theme-button-color, #0088cc);
+  color: var(--tg-theme-button-text-color, #fff);
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.browse-button:active {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+/* Loading & Error States */
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 16px;
+}
+
+.spinner-icon {
+  color: var(--tg-theme-button-color, #0088cc);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-icon {
+  color: #e74c3c;
+}
+
+.error-text {
+  font-size: 16px;
+  color: var(--tg-theme-text-color, #000);
+  margin: 0;
+}
+
+.retry-button {
+  padding: 10px 20px;
+  background: var(--tg-theme-button-color, #0088cc);
+  color: var(--tg-theme-button-text-color, #fff);
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.retry-button:active {
+  opacity: 0.8;
+}

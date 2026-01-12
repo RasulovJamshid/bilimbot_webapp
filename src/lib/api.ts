@@ -176,6 +176,15 @@ export interface QuizRetakeResponse {
   canRetake: boolean;
 }
 
+export interface Certificate {
+  id: number;
+  courseId: number;
+  courseTitle: string;
+  certificateCode: string;
+  completedAt: string;
+  studentName: string;
+}
+
 // API functions
 export const webappApi = {
   init: (botId: number, initData: string) =>
@@ -215,4 +224,8 @@ export const webappApi = {
   // Request video to be sent to Telegram chat
   requestVideo: (lessonId: number) =>
     api.post<{ success: boolean; message: string }>(`/webapp/lessons/${lessonId}/request-video`),
+
+  // Get student certificates
+  getCertificates: () =>
+    api.get<Certificate[]>('/webapp/certificates'),
 };

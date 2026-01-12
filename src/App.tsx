@@ -7,6 +7,7 @@ import { LessonView } from './pages/LessonView';
 import { Settings } from './pages/Settings';
 import { Progress } from './pages/Progress';
 import { Help } from './pages/Help';
+import { Certificates } from './pages/Certificates';
 import './App.css';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/progress" element={<Progress />} />
           <Route path="/help" element={<Help />} />
+          <Route path="/certificates" element={<Certificates />} />
         </Routes>
       </AppProvider>
     </BrowserRouter>
