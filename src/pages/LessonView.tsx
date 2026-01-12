@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { webappApi } from '../lib/api';
 import type { LessonDetail, QuizResult, LessonOutlineItem } from '../lib/api';
-import { getTelegramWebApp, sendPlayVideoAction } from '../lib/telegram';
+import { getTelegramWebApp } from '../lib/telegram';
 import './LessonView.css';
 
 export function LessonView() {
@@ -102,13 +102,22 @@ export function LessonView() {
     }
   };
 
-  const handleWatchVideo = () => {
+  const handleWatchVideo = async () => {
     if (!lessonId) return;
     
-    const tg = getTelegramWebApp();
-    if (tg) {
-      sendPlayVideoAction(parseInt(lessonId));
-      tg.close();
+    try {
+      // Call API to request video be sent to chat
+      await webappApi.requestVideo(parseInt(lessonId));
+      
+      // Close WebApp to return to chat where video will appear
+      const tg = getTelegramWebApp();
+      if (tg) {
+        tg.close();
+      }
+    } catch (err) {
+      console.error('Failed to request video:', err);
+      const tg = getTelegramWebApp();
+      tg?.showAlert('Failed to send video. Please try again.');
     }
   };
 

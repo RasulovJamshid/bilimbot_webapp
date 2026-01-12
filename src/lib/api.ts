@@ -211,4 +211,8 @@ export const webappApi = {
 
   retakeQuiz: (lessonId: number) =>
     api.post<QuizRetakeResponse>(`/webapp/lessons/${lessonId}/quiz-retake`),
+
+  // Request video to be sent to Telegram chat
+  requestVideo: (lessonId: number) =>
+    api.post<{ success: boolean; message: string }>(`/webapp/lessons/${lessonId}/request-video`),
 };
