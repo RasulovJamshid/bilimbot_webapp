@@ -109,22 +109,27 @@ export function LessonView() {
     const tg = getTelegramWebApp();
     
     try {
-      // Show loading state
-      tg?.showPopup({
-        title: 'Loading',
-        message: 'Sending video to chat...',
-        buttons: []
-      });
+      setLoading(true);
       
       // Call API to request video be sent to chat
       await webappApi.requestVideo(parseInt(lessonId));
       
-      // Close WebApp to return to chat where video will appear
-      if (tg) {
-        tg.close();
-      }
+      // Show success message
+      tg?.showAlert('Video is being sent to chat!', () => {
+        // Close WebApp after user dismisses alert
+        if (tg) {
+          try {
+            tg.close();
+          } catch (closeErr) {
+            console.error('Failed to close WebApp:', closeErr);
+            // If close fails, just navigate back
+            window.history.back();
+          }
+        }
+      });
     } catch (err: any) {
       console.error('Failed to request video:', err);
+      setLoading(false);
       const errorMsg = err?.response?.data?.message || err?.message || 'Failed to send video. Please try again.';
       tg?.showAlert(`Error: ${errorMsg}`);
     }
