@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { webappApi } from '../lib/api';
 import type { LessonDetail, QuizResult, LessonOutlineItem } from '../lib/api';
 import { getTelegramWebApp } from '../lib/telegram';
-import { Loader2, CheckCircle, XCircle, BarChart3, Paperclip, FileText, Link as LinkIcon, Play, Video } from 'lucide-react';
+import { Loader2, CheckCircle, XCircle, BarChart3, Paperclip, FileText, Link as LinkIcon, Play, Video, Image as ImageIcon } from 'lucide-react';
+import { ProxiedImage } from '../components/ProxiedImage';
 import './LessonView.css';
 
 export function LessonView() {
@@ -417,6 +418,82 @@ export function LessonView() {
             <p className="video-note">
               This lesson has been marked as completed.
             </p>
+          )}
+        </div>
+      )}
+
+      {/* Image Lesson */}
+      {lesson.type === 'image' && (
+        <div className="image-content">
+          {lesson.caption && <p className="image-caption">{lesson.caption}</p>}
+          
+          {lesson.mediaAssetId ? (
+            <div className="image-wrapper">
+              <ProxiedImage 
+                mediaId={lesson.mediaAssetId}
+                alt={lesson.title}
+                className="lesson-image"
+              />
+            </div>
+          ) : lesson.imageUrl ? (
+            <div className="image-wrapper">
+              <img 
+                src={lesson.imageUrl} 
+                alt={lesson.title}
+                className="lesson-image"
+                style={{ width: '100%', borderRadius: '8px', marginBottom: '16px' }}
+              />
+            </div>
+          ) : (
+            <div className="image-placeholder">
+              <ImageIcon size={48} className="image-icon" />
+              <p>No image available</p>
+            </div>
+          )}
+
+          {lesson.resources && lesson.resources.length > 0 && (
+            <div className="resources-section">
+              <div className="resources-header">
+                <Paperclip size={20} />
+                <h3>Resources</h3>
+              </div>
+              {lesson.resources.map((resource, index) => (
+                <a
+                  key={index}
+                  href={resource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="resource-link"
+                >
+                  {resource.type === 'file' ? (
+                    <FileText size={16} />
+                  ) : (
+                    <LinkIcon size={16} />
+                  )}
+                  {resource.label}
+                </a>
+              ))}
+            </div>
+          )}
+
+          {lesson.status !== 'completed' && (
+            <button
+              className="complete-button"
+              onClick={handleComplete}
+              disabled={completing}
+            >
+              {completing ? (
+                <>
+                  <Loader2 size={18} className="button-spinner" />
+                  Completing...
+                </>
+              ) : (
+                <>
+                  <CheckCircle size={18} />
+                  Mark as Completed
+                </>
+              )}
+            </button>
           )}
         </div>
       )}
